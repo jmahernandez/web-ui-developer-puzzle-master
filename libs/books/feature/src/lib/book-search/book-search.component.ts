@@ -10,12 +10,17 @@ import {
 import { FormBuilder } from '@angular/forms';
 import { Book } from '@tmo/shared/models';
 
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
+
 @Component({
   selector: 'tmo-book-search',
   templateUrl: './book-search.component.html',
   styleUrls: ['./book-search.component.scss']
 })
 export class BookSearchComponent implements OnInit {
+  private subject: Subject<string> = new Subject();
+
   books: ReadingListBook[];
 
   searchForm = this.fb.group({
@@ -34,6 +39,12 @@ export class BookSearchComponent implements OnInit {
   ngOnInit(): void {
     this.store.select(getAllBooks).subscribe(books => {
       this.books = books;
+    });
+
+    this.subject.pipe(
+      debounceTime(500)
+    ).subscribe(searchTextValue => {
+      this.searchBooks();
     });
   }
 
@@ -58,5 +69,9 @@ export class BookSearchComponent implements OnInit {
     } else {
       this.store.dispatch(clearSearch());
     }
+  }
+
+  onKeyUp(searchTextValue: string) {
+    this.subject.next(searchTextValue);
   }
 }
