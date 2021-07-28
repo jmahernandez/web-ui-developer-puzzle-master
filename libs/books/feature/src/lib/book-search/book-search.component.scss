@@ -12,6 +12,7 @@ form {
   display: grid;
   grid-template-columns: 50% 50%;
   grid-template-rows: auto;
+  grid-gap: 10px;
 }
 
 .book {
@@ -24,7 +25,7 @@ form {
 
 .book--title {
   font-weight: 500;
-  color: $gray80;
+  color: $pink-accent;
   margin-bottom: $spacing-xs;
 }
 
@@ -57,6 +58,10 @@ form {
       position: absolute;
       bottom: 0;
       right: 0;
+    }
+
+    button:hover {
+      opacity: 0.8;
     }
   }
 }
