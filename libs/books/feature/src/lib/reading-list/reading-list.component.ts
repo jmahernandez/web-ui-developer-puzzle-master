@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Store } from '@ngrx/store';
 import { addToReadingList, getReadingList, removeFromReadingList } from '@tmo/books/data-access';
-import { Book } from '@tmo/shared/models';
 
 @Component({
   selector: 'tmo-reading-list',
