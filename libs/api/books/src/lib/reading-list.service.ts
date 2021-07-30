@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { StorageService } from '@tmo/shared/storage';
 import { Book, ReadingListItem } from '@tmo/shared/models';
+import internal = require('assert');
 
 const KEY = '[okreads API] Reading List';
 
@@ -27,5 +28,22 @@ export class ReadingListService {
     this.storage.update(list => {
       return list.filter(x => x.bookId !== id);
     });
+  }
+
+  async bookFinished(i: ReadingListItem): Promise<ReadingListItem> {
+    let found: ReadingListItem;
+
+    this.storage.update(items => {
+      found = items.find(item => item.bookId === i.bookId);
+
+      if (found) {
+        found.finished = true;
+        found.finishedDate = new Date().toISOString();
+      }
+
+      return items;
+    });
+
+    return found;
   }
 }

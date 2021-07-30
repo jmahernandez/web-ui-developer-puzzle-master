@@ -40,7 +40,13 @@ const booksReducer = createReducer(
     ...state,
     error
   })),
-  on(BooksActions.clearSearch, state => booksAdapter.removeAll(state))
+  on(BooksActions.clearSearch, state => booksAdapter.removeAll(state)),
+  on(BooksActions.markBookAsFinished, (state, action) => {
+    return booksAdapter.updateOne({ id: action.book.id, changes: action.book }, state);
+  }),
+  on(BooksActions.unmarkBookAsFinished, (state, action) => {
+    return booksAdapter.updateOne({ id: action.book.id, changes: action.book }, state);
+  })
 );
 
 export function reducer(state: State | undefined, action: Action) {
