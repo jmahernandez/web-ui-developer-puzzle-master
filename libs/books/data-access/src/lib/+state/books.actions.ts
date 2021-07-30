@@ -17,3 +17,13 @@ export const searchBooksFailure = createAction(
 );
 
 export const clearSearch = createAction('[Books Search Bar] Clear Search');
+
+export const markBookAsFinished = createAction(
+  '[Book Search API] Mark book as finished',
+  props<{ book: Book }>()
+);
+
+export const unmarkBookAsFinished = createAction(
+  '[Book Search API] Unmark book as finished',
+  props<{ book: Book }>()
+);

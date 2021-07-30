@@ -55,3 +55,22 @@ describe('When: I undo the remove book action', () => {
     });
   });
 });
+
+describe('When: I mark a book as finished', () => {
+  beforeEach(() => {
+    cy.startAt('/');
+  });
+
+  it('Then: I should see a text with the date', () => {
+    cy.get('input[type="search"]').type('javascript');
+
+    cy.get('.book--content--info').eq(1).find('button').click();
+    cy.wait(3000);
+    cy.get('[data-testing="toggle-reading-list"]').click();
+    cy.get('[data-testing="reading-list-container"]').find('.finish-book').first().click();
+    cy.get('.reading-list-item--details--finished').contains('Finished on');
+    cy.get('.reading-list-container--close').click();
+    cy.wait(500);
+    cy.get('.book--content--info').first().find('button').contains('Finished');
+  });
+});
